@@ -1,10 +1,11 @@
 #include<stdio.h>
-
+#include<stdbool.h>
 struct node{
 	int val;
 	struct node* left;
 	struct node* right;
 };
+//function to create a binary search tree
 struct node* makeBSTFindHeight(int* array,int size,int* height){
 	int i,j,k=0;
 	struct node* temp=NULL;
@@ -75,8 +76,42 @@ int findMin(struct node* root){
 	}
 return root->val;
 }
+// function to search an element in BST
+bool search_element(int srch,struct node* root){
+	struct node* temp=root;
+	bool result=false;
+	while(temp!=NULL){
+		if(temp->val==srch){
+			result=true;
+			break;
+		}else{
+			if(srch<temp->val){
+				printf("moving left\n");
+				temp=temp->left;
+			}else{
+				printf("moving right\n");
+				temp=temp->right;
+			}
+		}
+	}
+return result;
+}
+//function to print bst
+void printBST(struct node* root){
+	int i;
+	static int h=1;
+	if(root!=NULL){
+		printf("%d",root->val);
+		for(i=0;i<h;i++){
+			printf("\n");
+		}
+		printBST(root->left);
+		printBST(root->right);
+		h++;	
+	}
+}
 int main(){
-        int height=0,max,min,size,i;
+        int height=0,max,min,size,i,srch;
         struct node* root=NULL;
 	printf("Enter number of elements to be added into BST:");
 	scanf("%d",&size);
@@ -90,7 +125,7 @@ int main(){
 	root=makeBSTFindHeight(array,size,&height);
 	printf("Height of the BST built:%d",height);
 	while(1){
-		printf("\nEnter choice\n1)find max\n2)find min\n3)exit\n");
+		printf("\nEnter choice\n1)find max\n2)find min\n3)search\n4)print BST\n5)exit\n");
 		scanf("%d",&choice);
 		switch(choice)
 		{	
@@ -103,6 +138,18 @@ int main(){
 				printf("Minimum element is :%d\n",min);
 			break;
 			case 3:
+				printf("Enter the element to search\n");
+				scanf("%d",&srch);
+				if(search_element(srch,root)){
+					printf("element found");
+				}else{
+					printf("element not found");
+				}
+			break;
+			case 4:
+				printBST(root);
+			break;
+			case 5:
 				printf("Good Bye !!\n");
 			exit(0);
 		}
