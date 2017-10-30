@@ -110,6 +110,20 @@ void printBST(struct node* root){
 		h++;	
 	}
 }
+struct node* predecessor(struct node* n){
+	n=n->left;
+	while(n->right != NULL){
+		n=n->right;
+	}
+return n;
+}
+struct node* successor(struct node* n){
+	n=n->right;
+	while(n->left != NULL){
+		n=n->right;
+	}
+return n;
+}
 int main(){
         int height=0,max,min,size,i,srch;
         struct node* root=NULL;
